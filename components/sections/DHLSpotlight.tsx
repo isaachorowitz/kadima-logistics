@@ -75,7 +75,7 @@ export default function DHLSpotlight() {
                 <img
                   src="https://res.cloudinary.com/iowitz/image/upload/f_auto,q_auto/kadima-logistics/sections/dhl-spotlight"
                   alt=""
-                  className="absolute inset-0 w-full h-full object-cover opacity-15"
+                  className="absolute inset-0 w-full h-full object-cover opacity-30"
                   loading="lazy"
                   aria-hidden="true"
                 />

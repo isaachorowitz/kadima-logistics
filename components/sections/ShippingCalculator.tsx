@@ -15,12 +15,21 @@ import SlideIn from "@/components/animations/SlideIn";
 import { Package, MapPin, Zap, Clock, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+const calculatorCardHeightClasses = "h-full lg:min-h-[560px]";
+const calculatorPanelClasses =
+  "w-full h-[320px] sm:h-[360px] lg:h-full lg:min-h-[560px] rounded-[6px] border border-white/10 bg-gradient-to-br from-navy-light/50 to-navy/80 overflow-hidden";
+
 const AnimatedBox3D = dynamic(
   () => import("@/components/three/AnimatedBox3D"),
   {
     ssr: false,
     loading: () => (
-      <div className="w-full h-[280px] lg:h-full lg:min-h-[360px] rounded-[6px] bg-gradient-to-br from-navy-light/50 to-navy/80 border border-white/10 flex items-center justify-center">
+      <div
+        className={cn(
+          calculatorPanelClasses,
+          "flex items-center justify-center"
+        )}
+      >
         <Package className="w-10 h-10 text-emerald/30 animate-pulse" />
       </div>
     ),
@@ -154,7 +163,12 @@ export default function ShippingCalculator() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Left: Calculator Card */}
           <SlideIn direction="left">
-            <div className="bg-white rounded-[6px] p-8 lg:p-10">
+            <div
+              className={cn(
+                "bg-white rounded-[6px] p-8 lg:p-10",
+                calculatorCardHeightClasses
+              )}
+            >
               <h3 className="font-display text-xl font-bold text-heading mb-6 flex items-center gap-2">
                 <Package className="w-5 h-5 text-emerald" />
                 Package Details
@@ -293,23 +307,39 @@ export default function ShippingCalculator() {
                   )}
                 </Button>
               </form>
+            </div>
+          </SlideIn>
 
-              {/* Rate Results */}
-              {results && (
-                <div className="mt-8 pt-8 border-t border-slate-border">
-                  <h4 className="font-display text-sm font-bold text-heading uppercase tracking-wider mb-4">
+          {/* Right: Fixed panel state (preview -> loading -> results) */}
+          <SlideIn direction="right" delay={0.15}>
+            <div className={calculatorCardHeightClasses}>
+              {isCalculating ? (
+                <div
+                  className={cn(
+                    calculatorPanelClasses,
+                    "flex flex-col items-center justify-center gap-4 px-6 text-center"
+                  )}
+                >
+                  <span className="w-10 h-10 border-2 border-white/40 border-t-emerald rounded-full animate-spin" />
+                  <p className="text-white/80 text-sm font-semibold">
+                    Calculating your best carrier mix...
+                  </p>
+                </div>
+              ) : results ? (
+                <div className={cn(calculatorPanelClasses, "p-6 lg:p-8 flex flex-col")}>
+                  <h4 className="font-display text-sm font-bold text-white/90 uppercase tracking-wider">
                     Estimated Rates
                   </h4>
 
-                  <div className="space-y-3">
+                  <div className="mt-5 space-y-3 flex-1 overflow-y-auto pr-1">
                     {results.map((rate) => (
                       <div
                         key={rate.carrier}
                         className={cn(
                           "flex items-center justify-between p-3 rounded-[4px] border transition-colors",
                           rate.recommended
-                            ? "border-emerald/30 bg-emerald/5"
-                            : "border-slate-border bg-slate-bg"
+                            ? "border-emerald/30 bg-emerald/10"
+                            : "border-white/10 bg-white/5"
                         )}
                       >
                         <div className="flex items-center gap-3">
@@ -320,7 +350,7 @@ export default function ShippingCalculator() {
                             className="h-5 w-auto"
                           />
                           <div>
-                            <span className="text-sm font-semibold text-heading">
+                            <span className="text-sm font-semibold text-white/95">
                               {rate.carrier}
                             </span>
                             {rate.recommended && (
@@ -331,10 +361,10 @@ export default function ShippingCalculator() {
                           </div>
                         </div>
                         <div className="text-right">
-                          <span className="font-display text-lg font-bold text-heading">
+                          <span className="font-display text-lg font-bold text-white">
                             ${rate.rate.toFixed(2)}
                           </span>
-                          <span className="block text-xs text-body-text flex items-center justify-end gap-1">
+                          <span className="block text-xs text-white/65 flex items-center justify-end gap-1">
                             <Clock className="w-3 h-3" />
                             {rate.transitDays} days
                           </span>
@@ -344,34 +374,27 @@ export default function ShippingCalculator() {
                   </div>
 
                   {savingsPercent > 0 && (
-                    <div className="mt-4 p-3 rounded-[4px] bg-emerald/5 border border-emerald/20 text-center">
-                      <p className="text-emerald-text text-sm font-semibold">
+                    <div className="mt-4 p-3 rounded-[4px] bg-emerald/10 border border-emerald/30 text-center">
+                      <p className="text-emerald-200 text-sm font-semibold">
                         Save up to {savingsPercent}% with Kadima&apos;s
                         negotiated DHL rates
                       </p>
                     </div>
                   )}
 
-                  <p className="text-xs text-body-text/50 mt-4 text-center">
+                  <p className="text-xs text-white/50 mt-4 text-center">
                     Estimates based on standard pricing. Actual Kadima rates
                     may be even lower.
                   </p>
                 </div>
+              ) : (
+                <AnimatedBox3D
+                  className={calculatorPanelClasses}
+                  length={Number(dimensions[0]) || 20}
+                  width={Number(dimensions[1]) || 20}
+                  height={Number(dimensions[2]) || 20}
+                />
               )}
-            </div>
-          </SlideIn>
-
-          {/* Right: 3D Box */}
-          <SlideIn direction="right" delay={0.15}>
-            <div className="flex flex-col items-center justify-center h-full">
-              <AnimatedBox3D
-                length={Number(dimensions[0]) || 20}
-                width={Number(dimensions[1]) || 20}
-                height={Number(dimensions[2]) || 20}
-              />
-              <p className="text-white/30 text-xs mt-4 text-center">
-                Box updates as you change dimensions
-              </p>
             </div>
           </SlideIn>
         </div>

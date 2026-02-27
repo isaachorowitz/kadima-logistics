@@ -1,22 +1,98 @@
 "use client";
 
-import { useMemo, useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Bounds, useBounds, Center, Text } from "@react-three/drei";
 import * as THREE from "three";
 
 interface AnimatedBox3DProps {
   length: number;
   width: number;
   height: number;
+  className?: string;
+}
+
+interface SceneDimensions {
+  length: number;
+  width: number;
+  height: number;
+}
+
+const MIN_REALISTIC_BOX_INCHES = 2;
+const MAX_REALISTIC_BOX_INCHES = 60;
+const MIN_PREVIEW_MAX_DIMENSION = 0.85;
+const MAX_PREVIEW_MAX_DIMENSION = 2.35;
+
+function clamp(value: number, min: number, max: number): number {
+  return Math.min(Math.max(value, min), max);
+}
+
+function lerp(start: number, end: number, t: number): number {
+  return start + (end - start) * t;
+}
+
+function toSceneDimensions({
+  length,
+  width,
+  height,
+}: AnimatedBox3DProps): SceneDimensions {
+  const safeLength = Number.isFinite(length) && length > 0 ? length : 20;
+  const safeWidth = Number.isFinite(width) && width > 0 ? width : 20;
+  const safeHeight = Number.isFinite(height) && height > 0 ? height : 20;
+
+  const maxDimension = Math.max(safeLength, safeWidth, safeHeight, 1);
+  const characteristicSize = Math.cbrt(safeLength * safeWidth * safeHeight);
+
+  // Blend longest side and volume-equivalent size to keep scaling realistic for both cubes and elongated packages.
+  const effectiveInches = Math.sqrt(maxDimension * characteristicSize);
+  const clampedEffectiveInches = clamp(
+    effectiveInches,
+    MIN_REALISTIC_BOX_INCHES,
+    MAX_REALISTIC_BOX_INCHES
+  );
+
+  const minLog = Math.log(MIN_REALISTIC_BOX_INCHES);
+  const maxLog = Math.log(MAX_REALISTIC_BOX_INCHES);
+  const logPosition = (Math.log(clampedEffectiveInches) - minLog) / (maxLog - minLog);
+  const normalizedPosition = clamp(logPosition, 0, 1);
+
+  const targetMaxDimension = lerp(
+    MIN_PREVIEW_MAX_DIMENSION,
+    MAX_PREVIEW_MAX_DIMENSION,
+    normalizedPosition
+  );
+
+  const scale = targetMaxDimension / maxDimension;
+
+  return {
+    length: safeLength * scale,
+    width: safeWidth * scale,
+    height: safeHeight * scale,
+  };
+}
+
+function BoxFallbackContent() {
+  return (
+    <div className="h-full w-full flex items-center justify-center">
+      <div className="relative w-28 h-28">
+        <div className="absolute inset-0 rounded-[6px] border-2 border-emerald/60 bg-emerald/10" />
+        <div className="absolute top-2 left-1/2 h-20 w-[2px] -translate-x-1/2 bg-emerald/50" />
+        <div className="absolute top-1/2 left-2 h-[2px] w-24 -translate-y-1/2 bg-emerald/50" />
+      </div>
+    </div>
+  );
 }
 
 function Box({ length, width, height }: AnimatedBox3DProps) {
   const groupRef = useRef<THREE.Group>(null);
 
-  const displayLength = length || 20;
-  const displayWidth = width || 20;
-  const displayHeight = height || 20;
+  const sceneDimensions = useMemo(
+    () => toSceneDimensions({ length, width, height }),
+    [length, width, height]
+  );
+
+  const displayLength = sceneDimensions.length;
+  const displayWidth = sceneDimensions.width;
+  const displayHeight = sceneDimensions.height;
 
   useFrame((_state, delta) => {
     if (groupRef.current) {
@@ -33,10 +109,12 @@ function Box({ length, width, height }: AnimatedBox3DProps) {
     return new THREE.EdgesGeometry(geometry);
   }, [displayLength, displayWidth, displayHeight]);
 
-  const textSize = Math.min(displayLength, displayHeight) * 0.18;
-  const textMaxWidth = Math.min(displayLength, displayHeight) * 0.6;
+  useEffect(() => {
+    return () => {
+      edgeGeometry.dispose();
+    };
+  }, [edgeGeometry]);
 
-  // Navy-themed texture
   const boxTexture = useMemo(() => {
     const canvas = document.createElement("canvas");
     canvas.width = 512;
@@ -59,26 +137,40 @@ function Box({ length, width, height }: AnimatedBox3DProps) {
       ctx.fillRect(x, y, s, s);
     }
 
+    ctx.fillStyle = "rgba(16, 185, 129, 0.38)";
+    ctx.fillRect(220, 0, 72, 512);
+    ctx.fillRect(0, 220, 512, 72);
+
+    ctx.fillStyle = "rgba(16, 185, 129, 0.72)";
+    ctx.font = "bold 58px sans-serif";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText("KADIMA", 256, 256);
+
     const texture = new THREE.CanvasTexture(canvas);
     texture.wrapS = THREE.RepeatWrapping;
     texture.wrapT = THREE.RepeatWrapping;
+    texture.anisotropy = 4;
     return texture;
   }, []);
 
+  useEffect(() => {
+    return () => {
+      boxTexture.dispose();
+    };
+  }, [boxTexture]);
+
   return (
     <group ref={groupRef}>
-      {/* Main box */}
       <mesh>
         <boxGeometry args={[displayLength, displayHeight, displayWidth]} />
-        <meshBasicMaterial map={boxTexture} />
+        <meshStandardMaterial map={boxTexture} metalness={0.08} roughness={0.74} />
       </mesh>
 
-      {/* Emerald edge highlights */}
       <lineSegments geometry={edgeGeometry}>
-        <lineBasicMaterial color="#10B981" linewidth={2} />
+        <lineBasicMaterial color="#10B981" />
       </lineSegments>
 
-      {/* Emerald tape strips on top */}
       <mesh
         position={[0, displayHeight / 2 + 0.01, 0]}
         rotation={[-Math.PI / 2, 0, 0]}
@@ -94,76 +186,7 @@ function Box({ length, width, height }: AnimatedBox3DProps) {
         <planeGeometry args={[displayLength * 0.15, displayLength]} />
         <meshBasicMaterial color="#059669" transparent opacity={0.6} />
       </mesh>
-
-      {/* Kadima text on front face */}
-      <Text
-        position={[0, 0, displayWidth / 2 + 0.02]}
-        fontSize={textSize}
-        maxWidth={textMaxWidth}
-        color="#10B981"
-        anchorX="center"
-        anchorY="middle"
-        fontWeight="bold"
-      >
-        Kadima
-      </Text>
-
-      {/* Kadima text on back face */}
-      <Text
-        position={[0, 0, -displayWidth / 2 - 0.02]}
-        rotation={[0, Math.PI, 0]}
-        fontSize={textSize}
-        maxWidth={textMaxWidth}
-        color="#10B981"
-        anchorX="center"
-        anchorY="middle"
-        fontWeight="bold"
-      >
-        Kadima
-      </Text>
-
-      {/* Kadima text on right side */}
-      <Text
-        position={[displayLength / 2 + 0.02, 0, 0]}
-        rotation={[0, Math.PI / 2, 0]}
-        fontSize={textSize}
-        maxWidth={textMaxWidth}
-        color="#10B981"
-        anchorX="center"
-        anchorY="middle"
-        fontWeight="bold"
-      >
-        Kadima
-      </Text>
-
-      {/* Kadima text on left side */}
-      <Text
-        position={[-displayLength / 2 - 0.02, 0, 0]}
-        rotation={[0, -Math.PI / 2, 0]}
-        fontSize={textSize}
-        maxWidth={textMaxWidth}
-        color="#10B981"
-        anchorX="center"
-        anchorY="middle"
-        fontWeight="bold"
-      >
-        Kadima
-      </Text>
     </group>
-  );
-}
-
-function FitContent({ length, width, height }: AnimatedBox3DProps) {
-  const bounds = useBounds();
-
-  useEffect(() => {
-    bounds.refresh().clip().fit();
-  }, [bounds, length, width, height]);
-
-  return (
-    <Center>
-      <Box length={length} width={width} height={height} />
-    </Center>
   );
 }
 
@@ -171,19 +194,27 @@ export default function AnimatedBox3D({
   length,
   width,
   height,
+  className,
 }: AnimatedBox3DProps) {
+  const containerClasses =
+    className ??
+    "w-full h-[280px] lg:h-full lg:min-h-[360px] rounded-[6px] overflow-hidden bg-gradient-to-br from-navy-light/50 to-navy/80 border border-white/10";
+
   return (
-    <div className="w-full h-[280px] lg:h-full lg:min-h-[360px] rounded-[6px] overflow-hidden bg-gradient-to-br from-navy-light/50 to-navy/80 border border-white/10">
+    <div className={containerClasses}>
       <Canvas
         camera={{
-          position: [4, 2, 4],
-          fov: 45,
+          position: [4.8, 3.4, 4.8],
+          fov: 44,
         }}
         dpr={[1, 1.5]}
+        gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+        fallback={<BoxFallbackContent />}
       >
-        <Bounds fit clip observe margin={1.8}>
-          <FitContent length={length} width={width} height={height} />
-        </Bounds>
+        <ambientLight intensity={0.68} />
+        <directionalLight position={[3, 4, 2]} intensity={1.1} color="#E5EFFD" />
+        <directionalLight position={[-2, -1, -3]} intensity={0.35} color="#93C5FD" />
+        <Box length={length} width={width} height={height} />
       </Canvas>
     </div>
   );
