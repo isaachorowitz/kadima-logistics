@@ -6,7 +6,7 @@ import Button from "@/components/ui/Button";
 import HeroBackground from "@/components/sections/HeroBackground";
 import SlideIn from "@/components/animations/SlideIn";
 import { useAnimationReady } from "@/components/animations/AnimationProvider";
-import { ArrowRight, Play, Zap } from "lucide-react";
+import { ArrowRight, Zap } from "lucide-react";
 
 const ease = [0.25, 0.46, 0.45, 0.94] as const;
 
@@ -169,13 +169,13 @@ export default function Hero() {
                 <div className="absolute inset-0 bg-navy/15" />
               </div>
 
-              {/* Placeholder content — visible until a real video is added */}
-              <div className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-4">
-                <div className="w-16 h-16 rounded-full bg-white/10 border border-white/20 flex items-center justify-center backdrop-blur-sm transition-all duration-300 hover:bg-white/20 hover:scale-105 cursor-pointer">
-                  <Play className="w-7 h-7 text-white ml-1" />
-                </div>
-                <p className="text-white/40 text-xs font-medium text-center px-8 tracking-wide uppercase">
-                  Shipping &amp; Logistics
+              {/* Kadima branding overlay on video */}
+              <div className="absolute inset-x-0 bottom-8 z-20 flex flex-col items-center justify-center">
+                <p className="font-display text-2xl font-bold text-white/80 tracking-widest uppercase">
+                  Kadima
+                </p>
+                <p className="text-emerald/60 text-xs font-semibold tracking-[0.3em] uppercase mt-1">
+                  Logistics
                 </p>
               </div>
 
