@@ -4,7 +4,6 @@ import { motion } from "motion/react";
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
 import HeroBackground from "@/components/sections/HeroBackground";
-import SlideIn from "@/components/animations/SlideIn";
 import { useAnimationReady } from "@/components/animations/AnimationProvider";
 import { ArrowRight, Zap } from "lucide-react";
 
@@ -16,6 +15,32 @@ export default function Hero() {
   return (
     <section className="relative bg-navy min-h-[100vh] flex items-center overflow-hidden">
       <HeroBackground />
+
+      {/* Video — fills right half on desktop, full background on mobile */}
+      <div className="absolute inset-0 lg:left-[45%] z-0">
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <source src="/videos/hero.mp4" type="video/mp4" />
+        </video>
+
+        {/* Gradient fades — blends video into the navy background */}
+        {/* Left fade (desktop) — wide gradient so video melts into content area */}
+        <div className="hidden lg:block absolute inset-y-0 left-0 w-[40%] bg-gradient-to-r from-navy via-navy/80 to-transparent z-10" />
+        {/* Top fade */}
+        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-navy/70 to-transparent z-10" />
+        {/* Bottom fade */}
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-navy via-navy/60 to-transparent z-10" />
+        {/* Mobile overlay — stronger so text is readable */}
+        <div className="lg:hidden absolute inset-0 bg-navy/70 z-10" />
+        {/* Subtle overall tint on desktop */}
+        <div className="hidden lg:block absolute inset-0 bg-navy/20 z-10" />
+      </div>
 
       <Container className="relative z-10 pt-32 pb-20 lg:pt-40 lg:pb-28">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
@@ -138,60 +163,8 @@ export default function Hero() {
             )}
           </div>
 
-          {/* Right: Tall Portrait Video Panel (9:16 Reels-style) */}
-          <SlideIn
-            direction="right"
-            delay={0.15}
-            className="hidden lg:flex lg:col-span-6 items-start justify-center"
-          >
-            <div className="relative w-full max-w-[380px] mx-auto aspect-[9/16] rounded-[8px] border border-white/10 overflow-hidden shadow-2xl shadow-black/30">
-              {/* Video element — shows when file exists */}
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                className="absolute inset-0 w-full h-full object-cover z-0"
-              >
-                <source src="/videos/hero.mp4" type="video/mp4" />
-              </video>
-
-              {/* Multi-layer gradient overlay for cinematic fade */}
-              <div className="absolute inset-0 z-10 pointer-events-none">
-                {/* Top fade — blends into hero bg */}
-                <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-navy/80 to-transparent" />
-                {/* Bottom fade — blends into hero bg */}
-                <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-navy/90 via-navy/40 to-transparent" />
-                {/* Left edge fade — smooth blend with content side */}
-                <div className="absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-navy/50 to-transparent" />
-                {/* Overall subtle tint */}
-                <div className="absolute inset-0 bg-navy/15" />
-              </div>
-
-              {/* Kadima branding overlay on video */}
-              <div className="absolute inset-x-0 bottom-8 z-20 flex flex-col items-center justify-center">
-                <p className="font-display text-2xl font-bold text-white/80 tracking-widest uppercase">
-                  Kadima
-                </p>
-                <p className="text-emerald/60 text-xs font-semibold tracking-[0.3em] uppercase mt-1">
-                  Logistics
-                </p>
-              </div>
-
-              {/* Subtle grid overlay */}
-              <div className="absolute inset-0 hero-grid-pattern opacity-20 z-10 pointer-events-none" />
-
-              {/* Decorative emerald corners */}
-              <div className="absolute top-3 left-3 w-6 h-6 border-t-2 border-l-2 border-emerald/40 rounded-tl-[2px] z-30" />
-              <div className="absolute top-3 right-3 w-6 h-6 border-t-2 border-r-2 border-emerald/40 rounded-tr-[2px] z-30" />
-              <div className="absolute bottom-3 left-3 w-6 h-6 border-b-2 border-l-2 border-emerald/40 rounded-bl-[2px] z-30" />
-              <div className="absolute bottom-3 right-3 w-6 h-6 border-b-2 border-r-2 border-emerald/40 rounded-br-[2px] z-30" />
-
-              {/* Glowing border effect */}
-              <div className="absolute inset-0 rounded-[8px] ring-1 ring-inset ring-white/5 z-30 pointer-events-none" />
-            </div>
-          </SlideIn>
+          {/* Right column — empty spacer so grid alignment is maintained */}
+          <div className="hidden lg:block lg:col-span-6" />
         </div>
       </Container>
     </section>
