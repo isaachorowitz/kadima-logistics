@@ -18,6 +18,7 @@ export default function Hero() {
 
       {/* Video — fills right half on desktop, full background on mobile */}
       <div className="absolute inset-0 lg:left-[45%] z-0">
+        {/* 4K for desktop, 1080p for mobile */}
         <video
           autoPlay
           muted
@@ -26,7 +27,8 @@ export default function Hero() {
           preload="metadata"
           className="absolute inset-0 w-full h-full object-cover"
         >
-          <source src="/videos/hero.mp4" type="video/mp4" />
+          <source src="/videos/hero.mp4" type="video/mp4" media="(min-width: 1024px)" />
+          <source src="/videos/hero-mobile.mp4" type="video/mp4" />
         </video>
 
         {/* Gradient fades — blends video into the navy background */}
