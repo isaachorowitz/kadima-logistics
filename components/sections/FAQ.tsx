@@ -1,9 +1,14 @@
 import Container from "@/components/ui/Container";
 import AccordionItem from "@/components/ui/AccordionItem";
+import FadeUp from "@/components/animations/FadeUp";
+import StaggerContainer, {
+  StaggerItem,
+} from "@/components/animations/StaggerContainer";
 
 const faqs = [
   {
-    question: "I already negotiated rates with my carrier. Can you still help?",
+    question:
+      "I already negotiated rates with my carrier. Can you still help?",
     answer:
       "Almost certainly. Most businesses that come to us have already negotiated — and we still find 15–30% in additional savings. Carrier sales reps optimize for their margin, not yours. We know the unpublished rate tiers, accessorial caps, and surcharge waiver structures that aren't offered unless specifically requested. Our audit will show you exactly what's left on the table.",
   },
@@ -39,25 +44,25 @@ export default function FAQ() {
     <section id="faq" className="py-20 lg:py-28 bg-white">
       <Container narrow>
         {/* Section Header */}
-        <div className="text-center mb-12">
-          <p className="text-emerald-text font-semibold text-sm uppercase tracking-wider mb-3">
-            FAQ
-          </p>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold text-heading">
-            Questions We Hear Most
-          </h2>
-        </div>
+        <FadeUp>
+          <div className="text-center mb-12">
+            <p className="text-emerald-text font-semibold text-sm uppercase tracking-wider mb-3">
+              FAQ
+            </p>
+            <h2 className="font-display text-3xl sm:text-4xl font-bold text-heading">
+              Questions We Hear Most
+            </h2>
+          </div>
+        </FadeUp>
 
         {/* Accordion */}
-        <div className="divide-y-0">
+        <StaggerContainer className="divide-y-0" staggerDelay={0.06}>
           {faqs.map((faq) => (
-            <AccordionItem
-              key={faq.question}
-              question={faq.question}
-              answer={faq.answer}
-            />
+            <StaggerItem key={faq.question}>
+              <AccordionItem question={faq.question} answer={faq.answer} />
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </Container>
     </section>
   );

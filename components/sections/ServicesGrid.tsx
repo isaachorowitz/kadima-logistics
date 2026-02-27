@@ -1,4 +1,8 @@
 import Container from "@/components/ui/Container";
+import FadeUp from "@/components/animations/FadeUp";
+import StaggerContainer, {
+  StaggerItem,
+} from "@/components/animations/StaggerContainer";
 import {
   Package,
   HandshakeIcon,
@@ -67,61 +71,67 @@ export default function ServicesGrid() {
     <section id="services" className="py-20 lg:py-28 bg-white">
       <Container>
         {/* Section Header */}
-        <div className="max-w-2xl mb-16">
-          <p className="text-emerald-text font-semibold text-sm uppercase tracking-wider mb-3">
-            What We Do
-          </p>
-          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-heading">
-            Full-Service Shipping Optimization
-          </h2>
-        </div>
+        <FadeUp>
+          <div className="max-w-2xl mb-16">
+            <p className="text-emerald-text font-semibold text-sm uppercase tracking-wider mb-3">
+              What We Do
+            </p>
+            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-heading">
+              Full-Service Shipping Optimization
+            </h2>
+          </div>
+        </FadeUp>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <StaggerContainer
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"
+          staggerDelay={0.07}
+        >
           {services.map((service) => {
             const Icon = service.icon;
             return (
-              <div
-                key={service.title}
-                className={`group rounded-[4px] p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg ${
-                  service.highlight
-                    ? "bg-navy text-white border border-navy"
-                    : "bg-slate-bg border border-slate-border hover:border-emerald/30"
-                }`}
-              >
+              <StaggerItem key={service.title}>
                 <div
-                  className={`w-10 h-10 rounded-[4px] flex items-center justify-center mb-4 ${
+                  className={`group rounded-[4px] p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg h-full ${
                     service.highlight
-                      ? "bg-dhl-amber/15"
-                      : "bg-navy/5 group-hover:bg-emerald/10"
-                  } transition-colors duration-200`}
+                      ? "bg-navy text-white border border-navy"
+                      : "bg-slate-bg border border-slate-border hover:border-emerald/30"
+                  }`}
                 >
-                  <Icon
-                    className={`w-5 h-5 ${
+                  <div
+                    className={`w-10 h-10 rounded-[4px] flex items-center justify-center mb-4 ${
                       service.highlight
-                        ? "text-dhl-amber"
-                        : "text-navy group-hover:text-emerald-text"
+                        ? "bg-dhl-amber/15"
+                        : "bg-navy/5 group-hover:bg-emerald/10"
                     } transition-colors duration-200`}
-                  />
+                  >
+                    <Icon
+                      className={`w-5 h-5 ${
+                        service.highlight
+                          ? "text-dhl-amber"
+                          : "text-navy group-hover:text-emerald-text"
+                      } transition-colors duration-200`}
+                    />
+                  </div>
+                  <h3
+                    className={`font-display text-base font-bold mb-2 ${
+                      service.highlight ? "!text-white" : "text-heading"
+                    }`}
+                  >
+                    {service.title}
+                  </h3>
+                  <p
+                    className={`text-sm leading-relaxed ${
+                      service.highlight ? "!text-white/90" : "text-body-text"
+                    }`}
+                  >
+                    {service.description}
+                  </p>
                 </div>
-                <h3
-                  className={`font-display text-base font-bold mb-2 ${
-                    service.highlight ? "text-white" : "text-heading"
-                  }`}
-                >
-                  {service.title}
-                </h3>
-                <p
-                  className={`text-sm leading-relaxed ${
-                    service.highlight ? "text-white/70" : "text-body-text"
-                  }`}
-                >
-                  {service.description}
-                </p>
-              </div>
+              </StaggerItem>
             );
           })}
-        </div>
+        </StaggerContainer>
       </Container>
     </section>
   );

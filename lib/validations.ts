@@ -20,6 +20,17 @@ export const carrierOptions = [
   { value: "other", label: "Other" },
 ];
 
+export const calculatorSchema = z.object({
+  length: z.number().min(1, "Required").max(120, "Max 120 in"),
+  width: z.number().min(1, "Required").max(120, "Max 120 in"),
+  height: z.number().min(1, "Required").max(120, "Max 120 in"),
+  weight: z.number().min(0.1, "Required").max(150, "Max 150 lbs"),
+  originZip: z.string().regex(/^\d{5}$/, "Enter 5-digit ZIP"),
+  destinationZip: z.string().regex(/^\d{5}$/, "Enter 5-digit ZIP"),
+});
+
+export type CalculatorFormData = z.infer<typeof calculatorSchema>;
+
 export const spendRanges = [
   { value: "", label: "Select monthly spend" },
   { value: "under-5k", label: "Under $5,000" },

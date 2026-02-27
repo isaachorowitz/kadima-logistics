@@ -1,0 +1,404 @@
+/* ==========================================================================
+   Kadima Logistics — Blog Article Body Styles
+   Matches brand: Navy (#0D1F3C), Emerald (#10B981), Slate text (#475569)
+   Fonts: Archivo (display), DM Sans (body) — inherited from root layout
+   ========================================================================== */
+
+.article-body {
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: #475569;
+  max-width: 100%;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.article-body * {
+  max-width: 100%;
+}
+
+/* --- Headings ----------------------------------------------------------- */
+.article-body h1,
+.article-body h2,
+.article-body h3,
+.article-body h4,
+.article-body h5,
+.article-body h6 {
+  font-family: var(--font-archivo), var(--font-display), system-ui, sans-serif;
+  font-weight: 700;
+  color: #0F172A;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+
+.article-body h1 {
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  margin-top: 2rem;
+}
+
+.article-body h2 {
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  margin-top: 2.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #10B98133;
+}
+
+.article-body h3 {
+  font-size: clamp(1.5rem, 3vw, 1.875rem);
+  margin-top: 2rem;
+}
+
+.article-body h4 {
+  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+  margin-top: 1.75rem;
+}
+
+.article-body p {
+  margin-bottom: 1.25rem;
+}
+
+/* --- Links -------------------------------------------------------------- */
+.article-body a {
+  color: #10B981;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 150ms ease;
+}
+
+.article-body a:hover {
+  color: #059669;
+  text-decoration: underline;
+}
+
+/* --- Strong & Emphasis -------------------------------------------------- */
+.article-body strong {
+  color: #0F172A;
+}
+
+.article-body em {
+  color: #059669;
+}
+
+/* --- Lists -------------------------------------------------------------- */
+.article-body ul,
+.article-body ol {
+  margin: 1.25rem 0;
+  padding-left: 1.75rem;
+}
+
+.article-body ul li {
+  list-style-type: disc;
+  margin-bottom: 0.5rem;
+  padding-left: 0.5rem;
+}
+
+.article-body ol li {
+  list-style-type: decimal;
+  margin-bottom: 0.5rem;
+  padding-left: 0.5rem;
+}
+
+.article-body li::marker {
+  color: #10B981;
+}
+
+.article-body ul ul,
+.article-body ol ol,
+.article-body ul ol,
+.article-body ol ul {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* --- Blockquotes -------------------------------------------------------- */
+.article-body blockquote {
+  border-left: 4px solid #10B981;
+  background: #10B98108;
+  padding: 1.5rem;
+  padding-left: 2rem;
+  margin: 2rem 0;
+  font-style: italic;
+  color: #475569;
+  border-radius: 4px;
+}
+
+.article-body blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* --- Code --------------------------------------------------------------- */
+.article-body code {
+  background-color: #F8F9FB;
+  color: #0D1F3C;
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  font-size: 0.9em;
+  font-family: "Courier New", monospace;
+  border: 1px solid #E2E5EB;
+}
+
+.article-body pre {
+  background-color: #0D1F3C;
+  color: #F8F9FB;
+  padding: 1.5rem;
+  border-radius: 6px;
+  overflow-x: auto;
+  margin: 2rem 0;
+}
+
+.article-body pre code {
+  background: none;
+  color: inherit;
+  padding: 0;
+  font-size: 0.875rem;
+  border: none;
+}
+
+/* --- Images ------------------------------------------------------------- */
+.article-body img {
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(13, 31, 60, 0.08);
+  margin: 2rem auto;
+  height: auto;
+  display: block;
+}
+
+/* --- Tables ------------------------------------------------------------- */
+.article-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+  overflow: hidden;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(13, 31, 60, 0.06);
+}
+
+.article-body th {
+  background: #0D1F3C;
+  color: white;
+  font-family: var(--font-archivo), var(--font-display), system-ui, sans-serif;
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+  text-align: left;
+}
+
+.article-body td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #E2E5EB;
+  color: #475569;
+}
+
+.article-body tr:nth-child(even) {
+  background-color: #F8F9FB;
+}
+
+/* --- Horizontal Rules --------------------------------------------------- */
+.article-body hr {
+  border: none;
+  border-top: 1px solid #E2E5EB;
+  margin: 3rem 0;
+}
+
+/* --- Callout Boxes (SEObot .sb class and variants) ---------------------- */
+.article-body .sb,
+.article-body .callout,
+.article-body .note,
+.article-body .tip,
+.article-body .warning,
+.article-body .info,
+.article-body aside,
+.article-body .kg-callout-card,
+.article-body [class*="callout"],
+.article-body [class*="note"],
+.article-body [class*="highlight"] {
+  color: #0F172A !important;
+  background: #10B98108 !important;
+  border-left: 4px solid #10B981 !important;
+  padding: 1.25rem 1.5rem !important;
+  border-radius: 4px !important;
+  margin: 2rem 0 !important;
+  font-style: normal !important;
+}
+
+/* Callout text visibility */
+.article-body .sb *,
+.article-body .callout *,
+.article-body .note *,
+.article-body aside *,
+.article-body [class*="callout"] *,
+.article-body [class*="note"] *,
+.article-body [class*="highlight"] * {
+  color: #0F172A !important;
+  background: none !important;
+  background-image: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: currentColor !important;
+  background-clip: unset !important;
+}
+
+/* Callout headings */
+.article-body .sb h1,
+.article-body .sb h2,
+.article-body .sb h3,
+.article-body .sb h4,
+.article-body .sb h5,
+.article-body .sb h6,
+.article-body h1.sb,
+.article-body h2.sb,
+.article-body h3.sb,
+.article-body h4.sb,
+.article-body h5.sb,
+.article-body h6.sb,
+.article-body h1[class*="sbb"],
+.article-body h2[class*="sbb"],
+.article-body h3[class*="sbb"],
+.article-body h4[class*="sbb"],
+.article-body h5[class*="sbb"],
+.article-body h6[class*="sbb"],
+.article-body .callout h1,
+.article-body .callout h2,
+.article-body .callout h3,
+.article-body .callout h4,
+.article-body .callout h5,
+.article-body .callout h6,
+.article-body .note h1,
+.article-body .note h2,
+.article-body .note h3,
+.article-body .note h4,
+.article-body .note h5,
+.article-body .note h6,
+.article-body aside h1,
+.article-body aside h2,
+.article-body aside h3,
+.article-body aside h4,
+.article-body aside h5,
+.article-body aside h6,
+.article-body [class*="callout"] h1,
+.article-body [class*="callout"] h2,
+.article-body [class*="callout"] h3,
+.article-body [class*="callout"] h4,
+.article-body [class*="callout"] h5,
+.article-body [class*="callout"] h6 {
+  background: none !important;
+  background-image: none !important;
+  -webkit-text-fill-color: #0D1F3C !important;
+  color: #0D1F3C !important;
+  border-bottom: none !important;
+  padding-top: 0.75rem !important;
+  padding-bottom: 0.75rem !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  line-height: 1.3 !important;
+}
+
+/* Links inside callouts */
+.article-body .sb a,
+.article-body .callout a,
+.article-body .note a,
+.article-body aside a {
+  color: #10B981 !important;
+  font-weight: 600 !important;
+}
+
+/* Links inside callout headings */
+.article-body .sb h1 a,
+.article-body .sb h2 a,
+.article-body .sb h3 a,
+.article-body .sb h4 a,
+.article-body .sb h5 a,
+.article-body .sb h6 a,
+.article-body .callout h1 a,
+.article-body .callout h2 a,
+.article-body .callout h3 a,
+.article-body .callout h4 a,
+.article-body .callout h5 a,
+.article-body .callout h6 a,
+.article-body .note h1 a,
+.article-body .note h2 a,
+.article-body .note h3 a,
+.article-body .note h4 a,
+.article-body .note h5 a,
+.article-body .note h6 a,
+.article-body aside h1 a,
+.article-body aside h2 a,
+.article-body aside h3 a,
+.article-body aside h4 a,
+.article-body aside h5 a,
+.article-body aside h6 a,
+.article-body [class*="callout"] h1 a,
+.article-body [class*="callout"] h2 a,
+.article-body [class*="callout"] h3 a,
+.article-body [class*="callout"] h4 a,
+.article-body [class*="callout"] h5 a,
+.article-body [class*="callout"] h6 a {
+  color: #10B981 !important;
+  -webkit-text-fill-color: #10B981 !important;
+  text-decoration: underline;
+  background: none !important;
+  background-image: none !important;
+}
+
+/* Paragraphs and divs inside callouts */
+.article-body .sb p,
+.article-body .sb div,
+.article-body .callout p,
+.article-body .callout div,
+.article-body .note p,
+.article-body .note div,
+.article-body aside p,
+.article-body aside div,
+.article-body [class*="callout"] p,
+.article-body [class*="callout"] div {
+  color: #0F172A !important;
+  background: none !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+/* Strong text inside callouts */
+.article-body .sb strong,
+.article-body .callout strong,
+.article-body .note strong,
+.article-body aside strong {
+  color: #0D1F3C !important;
+  font-weight: 700 !important;
+}
+
+/* Warning callouts */
+.article-body .warning,
+.article-body .alert,
+.article-body [class*="warning"] {
+  background: #FEF3C708 !important;
+  border-left-color: #F59E0B !important;
+}
+
+/* Info/Tip callouts */
+.article-body .tip,
+.article-body .info,
+.article-body [class*="tip"],
+.article-body [class*="info"] {
+  background: #0D1F3C08 !important;
+  border-left-color: #0D1F3C !important;
+}
+
+/* Success callouts */
+.article-body .success,
+.article-body [class*="success"] {
+  background: #10B98108 !important;
+  border-left-color: #10B981 !important;
+}
+
+/* --- Responsive --------------------------------------------------------- */
+@media (max-width: 768px) {
+  .article-body {
+    font-size: 1rem;
+  }
+
+  .article-body h1 {
+    font-size: 2rem;
+  }
+
+  .article-body h2 {
+    font-size: 1.75rem;
+  }
+}

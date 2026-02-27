@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Archivo, DM_Sans } from "next/font/google";
+import { AnimationProvider } from "@/components/animations/AnimationProvider";
+import CrispChat from "@/components/CrispChat";
 import "./globals.css";
 
 const archivo = Archivo({
@@ -47,7 +49,7 @@ export const metadata: Metadata = {
       "Authorized DHL Reseller. Free shipping audit reveals 20–30% in annual savings across UPS, FedEx, USPS, and DHL.",
     images: [
       {
-        url: "/og-image.png",
+        url: "https://res.cloudinary.com/iowitz/image/upload/f_auto,q_auto/kadima-logistics/og-images/og-main",
         width: 1200,
         height: 630,
         alt: "Kadima Logistics — Authorized DHL Reseller & Shipping Cost Optimization",
@@ -135,7 +137,8 @@ export default function RootLayout({
       <body
         className={`${archivo.variable} ${dmSans.variable} antialiased`}
       >
-        {children}
+        <CrispChat />
+        <AnimationProvider>{children}</AnimationProvider>
       </body>
     </html>
   );

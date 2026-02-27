@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 48" fill="none">
+  <!-- F letterform -->
+  <path d="M8 6h28v7H16v6h18v7H16v12H8V6z" fill="#4D148C"/>
+  <!-- e letterform (first) -->
+  <path d="M38 22c0-8.5 5.5-14 13.5-14 7.5 0 12.5 5 12.5 13v2H46c.5 4 3 6 7 6 3 0 5-1.2 6.5-3.5l6 3.5C63 33 59 36 51.5 36 43 36 38 30.5 38 22zm18.5-3c-.3-3.5-2.5-5.5-5.5-5.5-3.2 0-5.5 2-6 5.5h11.5z" fill="#4D148C"/>
+  <!-- d letterform -->
+  <path d="M66 2h8v10c2-2.5 5-4 8.5-4 7 0 12 5.5 12 14s-5 14-12 14c-3.5 0-6.5-1.5-8.5-4v3h-8V2zm8 20c0 5 3 8 7 8s7-3 7-8-3-8-7-8-7 3-7 8z" fill="#4D148C"/>
+  <!-- E letterform with arrow negative space -->
+  <path d="M104 6h28v7h-20v6h18v7h-18v6h20v7h-28V6z" fill="#FF6600"/>
+  <!-- x letterform - crafted to create arrow between E and x -->
+  <path d="M140 9l8 10.5L140 30v8l14-14.5L140 9z M156 9l-8 10.5L156 30v8l-14-14.5L156 9z" fill="#FF6600"/>
+  <!-- Arrow formed by E-x negative space (explicit for small sizes) -->
+  <path d="M132 17l7 7-7 7z" fill="#FF6600" opacity="0"/>
+</svg>

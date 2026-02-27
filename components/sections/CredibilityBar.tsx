@@ -1,11 +1,12 @@
 import Container from "@/components/ui/Container";
-import { Package, Truck, Box, Mail } from "lucide-react";
+import SlideIn from "@/components/animations/SlideIn";
+import FadeUp from "@/components/animations/FadeUp";
 
 const carriers = [
-  { name: "DHL", icon: Package, highlight: true },
-  { name: "UPS", icon: Box },
-  { name: "FedEx", icon: Truck },
-  { name: "USPS", icon: Mail },
+  { name: "DHL", logo: "/logos/dhl.svg", highlight: true },
+  { name: "UPS", logo: "/logos/ups.svg" },
+  { name: "FedEx", logo: "/logos/fedex.svg" },
+  { name: "USPS", logo: "/logos/usps.svg" },
 ];
 
 export default function CredibilityBar() {
@@ -14,33 +15,39 @@ export default function CredibilityBar() {
       <Container>
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           {/* Carriers */}
-          <div className="flex items-center gap-6 flex-wrap justify-center">
-            <span className="text-xs text-body-text/60 uppercase tracking-wider font-medium">
-              Trusted carriers:
-            </span>
-            {carriers.map((carrier) => {
-              const Icon = carrier.icon;
-              return (
+          <SlideIn direction="left">
+            <div className="flex items-center gap-6 flex-wrap justify-center">
+              <span className="text-xs text-body-text/60 uppercase tracking-wider font-medium">
+                Trusted carriers:
+              </span>
+              {carriers.map((carrier) => (
                 <div
                   key={carrier.name}
-                  className={`flex items-center gap-2 rounded-[2px] px-3 py-1.5 text-sm font-semibold ${
+                  className={`group flex items-center gap-2 rounded-[2px] px-3 py-1.5 transition-all duration-300 ${
                     carrier.highlight
-                      ? "bg-dhl-amber/10 text-heading border border-dhl-amber/20"
-                      : "bg-white text-body-text border border-slate-border"
+                      ? "bg-dhl-amber/10 border border-dhl-amber/20"
+                      : "bg-white border border-slate-border"
                   }`}
                 >
-                  <Icon className="w-4 h-4" />
-                  {carrier.name}
+                  <img
+                    src={carrier.logo}
+                    alt={carrier.name}
+                    className="h-5 w-auto object-contain grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                  />
                 </div>
-              );
-            })}
-          </div>
+              ))}
+            </div>
+          </SlideIn>
 
           {/* Savings Stat */}
-          <div className="flex items-center gap-2 text-sm">
-            <span className="text-emerald-text font-display font-bold text-lg">20–30%</span>
-            <span className="text-body-text/70">average annual savings</span>
-          </div>
+          <FadeUp delay={0.2}>
+            <div className="flex items-center gap-2 text-sm">
+              <span className="text-emerald-text font-display font-bold text-lg">
+                20–30%
+              </span>
+              <span className="text-body-text/70">average annual savings</span>
+            </div>
+          </FadeUp>
         </div>
       </Container>
     </section>

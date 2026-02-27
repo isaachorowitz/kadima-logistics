@@ -6,6 +6,9 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://kadimalogistics.com/sitemap.xml",
+    sitemap: [
+      "https://kadimalogistics.com/sitemap.xml",
+      "https://kadimalogistics.com/blog/sitemap.xml",
+    ],
   };
 }

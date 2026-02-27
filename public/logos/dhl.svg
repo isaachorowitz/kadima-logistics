@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 36" fill="none">
+  <rect width="200" height="36" rx="2" fill="#D2002E"/>
+  <!-- D letterform -->
+  <path d="M18 8h12c8 0 14 4 14 10s-6 10-14 10H18V8zm7 5v10h5c4.5 0 7.5-2.2 7.5-5s-3-5-7.5-5h-5z" fill="#FFCC01"/>
+  <!-- H letterform -->
+  <path d="M52 8h7v7h10V8h7v20h-7v-8H59v8h-7V8z" fill="#FFCC01"/>
+  <!-- L letterform -->
+  <path d="M84 8h7v15h12v5H84V8z" fill="#FFCC01"/>
+  <!-- Speed lines -->
+  <rect x="110" y="13" width="82" height="2.5" rx="1" fill="#FFCC01"/>
+  <rect x="116" y="20" width="76" height="2.5" rx="1" fill="#FFCC01"/>
+</svg>

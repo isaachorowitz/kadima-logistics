@@ -5,11 +5,12 @@ import { Menu, X } from "lucide-react";
 import Button from "@/components/ui/Button";
 
 const navLinks = [
-  { label: "Services", href: "#services" },
-  { label: "How It Works", href: "#how-it-works" },
-  { label: "DHL Partnership", href: "#dhl" },
-  { label: "Why Kadima", href: "#why-kadima" },
-  { label: "FAQ", href: "#faq" },
+  { label: "Services", href: "/#services" },
+  { label: "How It Works", href: "/#how-it-works" },
+  { label: "DHL Partnership", href: "/#dhl" },
+  { label: "Why Kadima", href: "/#why-kadima" },
+  { label: "Blog", href: "/blog" },
+  { label: "FAQ", href: "/#faq" },
 ];
 
 export default function Header() {
@@ -45,7 +46,7 @@ export default function Header() {
     >
       <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8 flex items-center justify-between">
         {/* Logo */}
-        <a href="#" className="flex items-center gap-2 group">
+        <a href="/" className="flex items-center gap-2 group">
           <div className="w-8 h-8 bg-emerald rounded-[4px] flex items-center justify-center">
             <span className="font-display text-navy font-black text-lg leading-none">K</span>
           </div>
@@ -69,7 +70,7 @@ export default function Header() {
 
         {/* Desktop CTA */}
         <div className="hidden lg:block">
-          <Button href="#contact" size="sm" variant="primary">
+          <Button href="/#contact" size="sm" variant="primary">
             Get Free Audit
           </Button>
         </div>
@@ -99,7 +100,7 @@ export default function Header() {
               </a>
             ))}
             <Button
-              href="#contact"
+              href="/#contact"
               size="lg"
               variant="primary"
               onClick={() => setIsMobileOpen(false)}

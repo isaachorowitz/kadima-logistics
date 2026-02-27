@@ -10,6 +10,7 @@ import StatsBar from "@/components/sections/StatsBar";
 import WhyKadima from "@/components/sections/WhyKadima";
 import Testimonials from "@/components/sections/Testimonials";
 import FAQ from "@/components/sections/FAQ";
+import ShippingCalculator from "@/components/sections/ShippingCalculator";
 import ContactCTA from "@/components/sections/ContactCTA";
 
 export default function Home() {
@@ -21,6 +22,7 @@ export default function Home() {
         <CredibilityBar />
         <ProblemSection />
         <HowItWorks />
+        <ShippingCalculator />
         <ServicesGrid />
         <DHLSpotlight />
         <StatsBar />
